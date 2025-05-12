@@ -44,6 +44,7 @@ function validateResource(resource) {
         severity: c.severity,
         expression: c.expression,
         message: c.human,
+        passed: result
       };
     } catch (err) {
       return {

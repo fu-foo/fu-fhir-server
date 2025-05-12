@@ -41,6 +41,12 @@ router.post("/", (req, res) => {
   if (errorsCardinality.length > 0) {
     console.error('多重度エラー:');
     errorsCardinality.forEach(err => console.error('- ' + err));
+    return res.status(400).json({
+      resourceType: "OperationOutcome",
+        issue: errorsCardinality.map(e => ({
+          error : e
+        }))
+    });
   } else {
     console.log('多重度チェックOK');
   }
@@ -49,7 +55,6 @@ router.post("/", (req, res) => {
   const errorsValidation = validateResource(resource);
   if (errorsValidation.length > 0) {
     // 現実の運用ではバリデーションエラーで登録しないけど、とりあえず登録してバリデーションエラーの内容を返す。
-    writeResource(RESOURCE_DIR, "Patient", resource);
     return res.status(400).json({
       resourceType: "OperationOutcome",
       issue: errorsValidation.map(e => ({

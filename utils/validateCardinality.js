@@ -3,6 +3,25 @@
  */
 const _ = require('lodash');
 
+function getValuesByPath(resource, path) {
+  const segments = path.split('.');
+  let current = [resource]; 
+  for (const segment of segments) {
+    const next = [];
+    for (const item of current) {
+      const val = _.get(item, segment);
+      if (Array.isArray(val)) {
+        next.push(...val);
+      } else if (val !== undefined && val !== null) {
+        next.push(val);
+      }
+    }
+    current = next;
+  }
+  return current;
+}
+
+
 /**
  * 多重度チェック
  *
@@ -19,20 +38,10 @@ function validateCardinality(resource, structureDefinition) {
     const min = element.min ?? 0;
     const max = element.max === '*' ? Infinity : parseInt(element.max);
 
-    // Convert absolute path like "Patient.name" to relative path "name"
     const relativePath = path.replace(/^.+?\./, '');
 
-    // Get value from the resource using lodash.get
-    const value = _.get(resource, relativePath);
-
-    let actualCount = 0;
-    if (value === undefined || value === null) {
-      actualCount = 0;
-    } else if (Array.isArray(value)) {
-      actualCount = value.length;
-    } else {
-      actualCount = 1;
-    }
+    const values = getValuesByPath(resource, relativePath);
+    const actualCount = values.length;
 
     if (actualCount < min) {
       errors.push(`[${path}] がない (最小: ${min})`);
