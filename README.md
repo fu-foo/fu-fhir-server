@@ -12,11 +12,14 @@ Node.jsをインストール（v22.15.0で確認）
 
 ・インストール
 git clone https://github.com/fu-foo/fu-fhir-server
+
 cd fu-fhir-server
+
 npm install
 
 ・実行
 fu-fhir-serverディレクトリにて
+
 npm start
 
 ブラウザーでclient.htmlを開いて、ブラウザーからCRUD操作を行う。
