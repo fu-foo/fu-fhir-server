@@ -1,0 +1,47 @@
+{
+    "resourceType": "Patient",
+    "meta": {
+        "profile": [
+            "http://fu-foo/fhir/core/StructureDefinition/FU_Patient"
+        ]
+    },
+    "identifier": [
+        {
+            "use": "official",
+            "system": "urn:ietf:rfc:3986",
+            "value": "00000010"
+        }
+    ],
+    "name": [
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/iso21090-EN-representation",
+                    "valueCode": "IDE"
+                }
+            ],
+            "use": "usual",
+            "text": "偽名 太郎",
+            "family": "偽名",
+            "given": [
+                "太郎"
+            ]
+        }
+    ],
+    "gender": "male",
+    "birthDate": "1970-01-01",
+    "address": [
+        {
+            "text": "東京都新宿区",
+            "postalCode": "1600023"
+        }
+    ],
+    "extension": [
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/patient-birthPlace",
+            "valueAddress": {
+                "state": "東京"
+            }
+        }
+    ]
+}
