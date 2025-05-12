@@ -80,7 +80,7 @@ router.post("/", (req, res) => {
  */
 router.put('/:id', (req, res) => {
   const id = req.params.id;
-  const updatedResource = { ...req.body, resourceType: 'Patient', id };
+  const updateResource = { ...req.body, resourceType: 'Patient', id };
 
   // バリデーション
   const errorsCardinality = validateCardinality(updateResource, JSON.parse(fs.readFileSync("./defs/StructureDefinition-FU-PATIENT.json", "utf8")));
@@ -117,11 +117,11 @@ router.put('/:id', (req, res) => {
   if (index === -1) {
     return res.status(404).json({ error: '対象なし' });
   }
-  resources[index] = updatedResource;
+  resources[index] = updateResource;
 
   // 更新
   fs.writeFileSync(filePath, JSON.stringify(resources, null, 2), 'utf8');
-  res.json(updatedResource);
+  res.json(updateResource);
 });
 
 /**
