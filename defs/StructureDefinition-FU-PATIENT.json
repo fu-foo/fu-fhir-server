@@ -38,8 +38,8 @@
           {
             "key": "fu-id-1",
             "severity": "error",
-            "human": "identifier.value は空NG",
-            "expression": "Patient.identifier.value.exists() and Patient.identifier.value != ''"
+            "human": "identifier.value=00000000はNG（オールゼロはNG）",
+            "expression": "Patient.identifier.value != '00000000'"
           }
         ]
       }
