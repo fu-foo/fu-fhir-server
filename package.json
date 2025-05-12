@@ -1,0 +1,20 @@
+{
+  "name": "fu-fhir-server",
+  "version": "0.0.1",
+  "description": "FHIRサーバー実装検証",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Kazunari Fukagawa",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "express": "^5.1.0",
+    "fhirpath": "^4.2.1",
+    "fs": "^0.0.1-security",
+    "lodash": "^4.17.21",
+    "uuid": "^11.1.0"
+  }
+}

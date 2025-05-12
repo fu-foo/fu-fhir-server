@@ -1,0 +1,75 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "fu-sample-patient",
+  "text": {
+    "status": "extensions"
+  },
+  "url": "http://fu-foo/fhir/core/StructureDefinition/FU_Patient",
+  "name": "FU_Patient",
+  "title": "FU Core Patient Profile",
+  "status": "active",
+  "date": "2025-05-12",
+  "publisher": "FU-FOO",
+  "contact": [
+    {
+      "name": "FU-FOO",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://github.com/fu-foo"
+        },
+        {
+          "system": "email",
+          "value": "none"
+        }
+      ]
+    }
+  ],
+  "description": "教育用FHIRサーバー用Structured Definition",
+  "copyright": "FU-FOO",
+  "fhirVersion": "4.0.1",
+  "snapshot": {
+    "element": [
+      {
+        "id": "Patient.extension:birthPlace",
+        "path": "Patient.extension",
+        "sliceName": "birthPlace",
+        "short": "生誕地",
+        "definition": "生誕地",
+        "comment": "この教育用のFHIRサーバーでは必須とする",
+        "min": "1",
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/StructureDefinition/patient-birthPlace"
+            ]
+          }
+        ],
+        "constraint": [
+          {
+            "key": "ele-1",
+            "severity": "error",
+            "human": "すべての FHIR 要素は、@value（値）または子要素のいずれかを持たなければなりません。",
+            "expression": "hasValue() or (children().count() > id.count())",
+            "source": "http://hl7.org/fhir/StructureDefinition/Element"
+          },
+          {
+            "key": "ext-1",
+            "severity": "error",
+            "human": "拡張（extensions）または値（value[x]）のいずれか一方のみを持たなければならず、両方を同時に持ってはいけません。",
+            "expression": "extension.exists() != value.exists()",
+            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
+          }
+        ],
+        "isModifier": false
+      }
+    ]
+  }
+}

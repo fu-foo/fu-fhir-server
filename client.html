@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>FHIR Client UI</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    textarea, input { width: 100%; margin-bottom: 10px; }
+    button { margin-right: 10px; }
+    pre { background: #f0f0f0; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h1>FHIR Patient Client</h1>
+
+  <h3>POST Patient JSON</h3>
+  <textarea id="postJson" rows="10" placeholder='{"resourceType": "Patient", ...}'></textarea>
+  <button onclick="postPatient()">POST</button>
+
+  <h3>PUT Patient by ID</h3>
+  <input id="putId" placeholder="Enter Patient ID to update">
+  <textarea id="putJson" rows="10" placeholder='{"resourceType": "Patient", ...}'></textarea>
+  <button onclick="putPatient()">PUT</button>
+
+  <h3>GET Patient by ID</h3>
+  <input id="getId" placeholder="Enter Patient ID">
+  <button onclick="getPatientById()">GET</button>
+
+  <h3>GET Patients by BirthPlace</h3>
+  <input id="birthPlace" placeholder="Enter Birth Place (e.g., 東京)">
+  <button onclick="getPatientsByBirthPlace()">GET</button>
+
+  <h3>DELETE Patient by ID</h3>
+  <input id="deleteId" placeholder="Enter Patient ID to Delete">
+  <button onclick="deletePatient()">DELETE</button>
+
+  <h3>Response</h3>
+  <pre id="response"></pre>
+
+  <script>
+    const baseUrl = 'http://localhost:3000';
+
+    function showResponse(data) {
+      document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function postPatient() {
+      const json = document.getElementById('postJson').value;
+      try {
+        const res = await fetch(`${baseUrl}/Patient`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: json
+        });
+        const data = await res.json();
+        showResponse(data);
+      } catch (err) {
+        showResponse({ error: err.message });
+      }
+    }
+
+    async function putPatient() {
+      const id = document.getElementById('putId').value;
+      const json = document.getElementById('putJson').value;
+      try {
+        const res = await fetch(`${baseUrl}/Patient/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: json
+        });
+        const data = await res.json();
+        showResponse(data);
+      } catch (err) {
+        showResponse({ error: err.message });
+      }
+    }
+
+    async function getPatientById() {
+      const id = document.getElementById('getId').value;
+      try {
+        const res = await fetch(`${baseUrl}/Patient/${id}`);
+        const data = await res.json();
+        showResponse(data);
+      } catch (err) {
+        showResponse({ error: err.message });
+      }
+    }
+
+    async function getPatientsByBirthPlace() {
+      const bp = document.getElementById('birthPlace').value;
+      try {
+        const res = await fetch(`${baseUrl}/Patient?birthPlace=${encodeURIComponent(bp)}`);
+        const data = await res.json();
+        showResponse(data);
+      } catch (err) {
+        showResponse({ error: err.message });
+      }
+    }
+
+    async function deletePatient() {
+      const id = document.getElementById('deleteId').value;
+      try {
+        const res = await fetch(`${baseUrl}/Patient/${id}`, { method: 'DELETE' });
+        if (res.status === 204) {
+          showResponse({ message: 'Patient deleted successfully (204 No Content)' });
+        } else {
+          const data = await res.json();
+          showResponse(data);
+        }
+      } catch (err) {
+        showResponse({ error: err.message });
+      }
+    }
+  </script>
+</body>
+</html>
