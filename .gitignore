@@ -135,5 +135,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# 実データ
+# DB的なデータ
 data/Patient/Patient.json
